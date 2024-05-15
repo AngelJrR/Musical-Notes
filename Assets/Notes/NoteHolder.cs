@@ -20,6 +20,7 @@ public class NoteHolder : MonoBehaviour
 
     }
 
+    //creates the random note that is shown, as in quarter, half, etc. then returns to have access
     public Object RandomNote(float spacing, int i)
     {
         int ugh = Random.Range(0, sounds.Count);

@@ -1,5 +1,9 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using TMPro;
 using UnityEngine; 
 
@@ -9,7 +13,10 @@ public class Spawn : MonoBehaviour
     public GameObject QuarterNote;
     public GameObject HalfNote;
     public GameObject WholeNote;
+    public GameObject EighthNote;
 
+    public TMP_Text pointShown;
+    public int points = 1000;
     bool first = true;
     int topthing = 4;
     float bottomthing = 4f;
@@ -20,30 +27,49 @@ public class Spawn : MonoBehaviour
     public TMP_InputField h;
     public TMP_InputField b;
     */
-    GameObject[] notes = new GameObject[3];
-
+    GameObject[] notes = new GameObject[4];
     public int switcheroo = 0;
+    public List<TMP_InputField> inputs = new List<TMP_InputField>();
+    public string solfege;
+    int interval = 1;
+    float nextTime = 0;
+    //public int correct = 0;
+    bool[] correct = new bool[4];
+
 
 
     private void Awake()
     {
+        //set stuff
         ScriptH = holder.GetComponent<NoteHolder>();
         notes[0] = QuarterNote;
         notes[1] = HalfNote;
         notes[2] = WholeNote;
-
+        notes[3] = EighthNote;
     }
 
     // Start is called before the first frame update
     void Start()
     {
         easy();
-        Debug.Log(spawnList.Count);
+        //Debug.Log(spawnList.Count);
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        //reduces points evert second
+            if (Time.time >= nextTime)
+            {
+
+          
+            points -= 1;
+            pointShown.text = ("Points: " + points);
+
+            nextTime += interval;
+
+            }
 
     }
 
@@ -64,18 +90,22 @@ public class Spawn : MonoBehaviour
       //  howmanynotes = Int32.Parse(h.GetComponent<TMP_InputField>().text);
     }
 
-
+    //all of this creates the 4 notes that appear on screen under the easy difficulty, as in four quarter
     public void easy()
     {
-
+        //unpause the game
+        Time.timeScale = 1;
 
         float weight = bottomthing;
         float left = topthing;
         float spacing = (12f / topthing);
         float upPosition;
 
+        //creates the four sound notes and ntoes (quarter)
         for (int i = 0; i < 4; i++)
         {
+            correct[i] = false;
+         
 
             GameObject newObject;
             newObject = (GameObject)ScriptH.RandomNote(spacing, i);
@@ -83,6 +113,7 @@ public class Spawn : MonoBehaviour
             spawnList.Add(newObject);
 
             upPosition = newObject.transform.position.y;
+            
 
 
             int place = UnityEngine.Random.Range(0, notes.Length);
@@ -92,12 +123,23 @@ public class Spawn : MonoBehaviour
             float valueNumber = which.GetComponent<Notes>().getNumber();
             spawnList.Add(Instantiate(QuarterNote, new Vector3(-4 + spacing * i, upPosition, 0), transform.rotation));
 
+            //edits the four input fields, including their corresponding note and position
+            TMP_InputField ughhhh = inputs[i];
+            //Debug.Log(upPosition * 108);
+            ughhhh.transform.position = new Vector3(ughhhh.transform.position.x, upPosition * 108 + 400, 1);
+            string O = newObject.GetComponent<NoteSounds>().getSolfegeO(); 
+            ughhhh.GetComponent<SolfegeI>().setSolfege(O);
+            ughhhh.GetComponent<SolfegeI>().setNsound(newObject.GetComponent<NoteSounds>());
+            
+            //Debug.Log(ughhhh.transform.position);
+            // inputs[i].transform.position = new Vector3(transform.position.x, upPosition/108, 1);
+
         }
 
 
     }
 
-
+    //creates notes randomly according to 4 4 time, could change time and should be but isn't mathematically correct
     public void begin()
     {
 
@@ -181,7 +223,7 @@ public class Spawn : MonoBehaviour
         */
     }
 
-
+    //actually cycles through the items in the array. Use array to access the note sounds and notes. Also checks difficulty
     public void newthings()
     {
         for (int i = 0; i < spawnList.Count; i++)
@@ -198,6 +240,7 @@ public class Spawn : MonoBehaviour
         else begin();
     }
 
+    //swtich difficulty
     public void Nintendo()
     {
         if (switcheroo == 0)
@@ -205,15 +248,16 @@ public class Spawn : MonoBehaviour
         else switcheroo = 0;
     }
 
+    //plays all sounds button
     private IEnumerator playyy()
     {
 
 
         for(int i = 0; i < spawnList.Count; i+=2)
         {
-            Debug.Log("hi");
+           // Debug.Log("hi");
             GameObject current = (GameObject)spawnList[i];
-            Debug.Log(current);
+           //Debug.Log(current);
 
             current.GetComponent<NoteSounds>().playSound();
 
@@ -231,12 +275,47 @@ public class Spawn : MonoBehaviour
 
     }
 
+    //starts play all 
     public void PlayAll()
     {
         StartCoroutine(playyy());
     }
-    
 
+    public void allCorrect()
+    {
+       
+    }    
+
+    //sets the points
+    public void setPoints(int which, bool Julian)
+    {
+        int ouch = 0;
+        correct[which] = Julian;
+
+        for (int i = 0; i < correct.Length; i++)
+        {
+            if (correct[i] == true)
+            ouch++;
+        }
+
+
+        if (ouch == 4)
+        {
+            if(Time.timeScale == 1)
+                points += 100;
+            Time.timeScale = 0;
+        }
+        else
+            ouch = 0;
+        /*
+        correct = 0;
+        else correct++;
+        //correct+=ouch;
+        Debug.Log(correct);
+        Debug.Log(ouch);
+        if (correct == 4)
+        */
+    }
 
 
 }

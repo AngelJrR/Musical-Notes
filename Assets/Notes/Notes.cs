@@ -45,9 +45,12 @@ public class Notes : MonoBehaviour
 
     }
 
+    //get the name of the note, as in Quarter note
     public string getName()
     { return Notename; }
 
+    
+    //get the value of the note, as in .25 for quarter
     public float getNumber()
     { return Notenumber; }
 
