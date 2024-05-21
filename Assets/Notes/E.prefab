@@ -136,8 +136,9 @@ MonoBehaviour:
   source: {fileID: 0}
   clip: {fileID: 8300000, guid: dedc6b20b55017048b937328415cf2c2, type: 3}
   position: -2.5
-  solfegeO: Ti
+  solfegeO: Re
   triangle: {fileID: 4410903422176265352}
+  Manager: {fileID: 0}
 --- !u!58 &3544499385942747489
 CircleCollider2D:
   m_ObjectHideFlags: 0

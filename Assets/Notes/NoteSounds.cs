@@ -62,12 +62,12 @@ public class NoteSounds : MonoBehaviour
     {
         if (Gameboy == 1)
         {
-            triangle.color = new Color(1, 0, 0);
+            //triangle.color = new Color(1, 0, 0);
             Manager.setPoints(which, false);
         }
         else
         {
-            triangle.color = new Color(0, 1, 0);
+            //triangle.color = new Color(0, 1, 0);
             Manager.setPoints(which, true);
         }
     }

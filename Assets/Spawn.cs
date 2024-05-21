@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using TMPro;
-using UnityEngine; 
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Spawn : MonoBehaviour
 {
@@ -14,19 +16,24 @@ public class Spawn : MonoBehaviour
     public GameObject HalfNote;
     public GameObject WholeNote;
     public GameObject EighthNote;
-
+    public Button BUTTON;
+    Image IMAGE;
     public TMP_Text pointShown;
-    public int points = 1000;
+    public TMP_Text roundsShown;
+    public TMP_Text ScaleShown;
+
+    int points = 100;
     bool first = true;
     int topthing = 4;
     float bottomthing = 4f;
     int howmanynotes = 4;
-    public GameObject holder;
-    NoteHolder ScriptH;
-   /* public TMP_InputField t;
-    public TMP_InputField h;
-    public TMP_InputField b;
-    */
+    public NoteHolder DHolder;
+    public NoteHolder FHolder;
+    //NoteHolder ScriptH;
+    /* public TMP_InputField t;
+     public TMP_InputField h;
+     public TMP_InputField b;
+     */
     GameObject[] notes = new GameObject[4];
     public int switcheroo = 0;
     public List<TMP_InputField> inputs = new List<TMP_InputField>();
@@ -35,24 +42,33 @@ public class Spawn : MonoBehaviour
     float nextTime = 0;
     //public int correct = 0;
     bool[] correct = new bool[4];
-
-
+    bool ready = true;
+    bool good = false;
+    int rounds = 5;
+    public GameObject myself;
 
     private void Awake()
     {
         //set stuff
-        ScriptH = holder.GetComponent<NoteHolder>();
+        //ScriptH = DHolder.GetComponent<NoteHolder>();
+        //ScriptH = DHolder.GetComponent<NoteHolder>();
         notes[0] = QuarterNote;
         notes[1] = HalfNote;
         notes[2] = WholeNote;
         notes[3] = EighthNote;
+        IMAGE = BUTTON.image;
+        DontDestroyOnLoad(this);
+        DontDestroyOnLoad(myself);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        easy();
+        //easy();
         //Debug.Log(spawnList.Count);
+        roundsShown.text = ("Rounds Left: " + rounds);
+        Time.timeScale = 0;
+
     }
 
     // Update is called once per frame
@@ -60,34 +76,34 @@ public class Spawn : MonoBehaviour
     {
 
         //reduces points evert second
-            if (Time.time >= nextTime)
-            {
+        if (Time.time >= nextTime)
+        {
 
-          
+
             points -= 1;
             pointShown.text = ("Points: " + points);
 
             nextTime += interval;
 
-            }
+        }
 
     }
 
     public void setTop()
     {
-       // topthing = Int32.Parse(t.GetComponent<TMP_InputField>().text);
+        // topthing = Int32.Parse(t.GetComponent<TMP_InputField>().text);
 
 
     }
 
     public void setBottom()
     {
-       // bottomthing = Int32.Parse(b.GetComponent<TMP_InputField>().text);
+        // bottomthing = Int32.Parse(b.GetComponent<TMP_InputField>().text);
     }
 
     public void setHowMany()
     {
-      //  howmanynotes = Int32.Parse(h.GetComponent<TMP_InputField>().text);
+        //  howmanynotes = Int32.Parse(h.GetComponent<TMP_InputField>().text);
     }
 
     //all of this creates the 4 notes that appear on screen under the easy difficulty, as in four quarter
@@ -95,47 +111,57 @@ public class Spawn : MonoBehaviour
     {
         //unpause the game
         Time.timeScale = 1;
+        IMAGE.color = Color.white;
 
-        float weight = bottomthing;
-        float left = topthing;
+        //float weight = bottomthing;
+        //  float left = topthing;
         float spacing = (12f / topthing);
         float upPosition;
+        int place = UnityEngine.Random.Range(0, 2);
+
 
         //creates the four sound notes and ntoes (quarter)
         for (int i = 0; i < 4; i++)
         {
-            correct[i] = false;
-         
+
 
             GameObject newObject;
-            newObject = (GameObject)ScriptH.RandomNote(spacing, i);
-
+            if (place == 0)
+            {
+             newObject = (GameObject)DHolder.RandomNote(spacing, i);
+             ScaleShown.text = ("D Minor Scale");
+            }
+            else
+            {
+            newObject = (GameObject)FHolder.RandomNote(spacing, i);
+                ScaleShown.text = ("F Major Scale");
+            }
             spawnList.Add(newObject);
 
             upPosition = newObject.transform.position.y;
-            
 
 
-            int place = UnityEngine.Random.Range(0, notes.Length);
-            GameObject which = notes[place];
 
-            string valueName = which.GetComponent<Notes>().getName();
-            float valueNumber = which.GetComponent<Notes>().getNumber();
+            //  GameObject which = notes[place];
+
+            // string valueName = which.GetComponent<Notes>().getName();
+            // float valueNumber = which.GetComponent<Notes>().getNumber();
             spawnList.Add(Instantiate(QuarterNote, new Vector3(-4 + spacing * i, upPosition, 0), transform.rotation));
+            correct[i] = false;
 
             //edits the four input fields, including their corresponding note and position
             TMP_InputField ughhhh = inputs[i];
             //Debug.Log(upPosition * 108);
-            ughhhh.transform.position = new Vector3(ughhhh.transform.position.x, upPosition * 108 + 400, 1);
-            string O = newObject.GetComponent<NoteSounds>().getSolfegeO(); 
+            ughhhh.transform.position = new Vector3(ughhhh.transform.position.x, ughhhh.transform.position.y, 1);
+            string O = newObject.GetComponent<NoteSounds>().getSolfegeO();
             ughhhh.GetComponent<SolfegeI>().setSolfege(O);
             ughhhh.GetComponent<SolfegeI>().setNsound(newObject.GetComponent<NoteSounds>());
-            
+
             //Debug.Log(ughhhh.transform.position);
             // inputs[i].transform.position = new Vector3(transform.position.x, upPosition/108, 1);
 
         }
-
+        ready = false;
 
     }
 
@@ -155,7 +181,7 @@ public class Spawn : MonoBehaviour
         while (left > 0)
         {
             GameObject newObject;
-            newObject = (GameObject)ScriptH.RandomNote(spacing, iteration);
+            newObject = (GameObject)DHolder.RandomNote(spacing, iteration);
 
             spawnList.Add(newObject);
             upPosition = newObject.transform.position.y;
@@ -168,7 +194,7 @@ public class Spawn : MonoBehaviour
             float valueNumber = which.GetComponent<Notes>().getNumber();
 
 
-           
+
 
             if ((left - (valueNumber * weight) < 0) || ((value - valueNumber) < 0))
             {
@@ -226,18 +252,37 @@ public class Spawn : MonoBehaviour
     //actually cycles through the items in the array. Use array to access the note sounds and notes. Also checks difficulty
     public void newthings()
     {
-        for (int i = 0; i < spawnList.Count; i++)
+        Time.timeScale = 1;
+        //Debug.Log(spawnList.Count);
+        Debug.Log("frick1");
+        allCorrect();
+        if (rounds == 0)
         {
-            //DestroyObject((UnityEngine.Object)spawnList[i]);
-            UnityEngine.Object.Destroy((UnityEngine.Object)spawnList[i]);
+            SceneManager.LoadScene("Finish", LoadSceneMode.Single);
+            Debug.Log("frick2");
         }
-        //Destroy(gameObject);
+        if (ready)
+        {
+            if (!first)
+            {
+                for (int i = 0; i < spawnList.Count; i++)
+                {
+                    //DestroyObject((UnityEngine.Object)spawnList[i]);
+                    UnityEngine.Object.Destroy((UnityEngine.Object)spawnList[i]);
+                }
+                //Destroy(gameObject);
 
-        spawnList.Clear();
+                spawnList.Clear();
+                
+            }
 
-        if (switcheroo == 0)
-            easy();
-        else begin();
+            //Debug.Log("frick3");
+            if (switcheroo == 0)
+                easy();
+            else begin();
+        }
+        first = false;
+        ready = false;
     }
 
     //swtich difficulty
@@ -253,11 +298,11 @@ public class Spawn : MonoBehaviour
     {
 
 
-        for(int i = 0; i < spawnList.Count; i+=2)
+        for (int i = 0; i < spawnList.Count; i += 2)
         {
-           // Debug.Log("hi");
+            // Debug.Log("hi");
             GameObject current = (GameObject)spawnList[i];
-           //Debug.Log(current);
+            //Debug.Log(current);
 
             current.GetComponent<NoteSounds>().playSound();
 
@@ -283,8 +328,22 @@ public class Spawn : MonoBehaviour
 
     public void allCorrect()
     {
-       
-    }    
+        if (good)
+        {
+            if (Time.timeScale == 1)
+                points += 100;
+            Time.timeScale = 0;
+            ready = true;
+            IMAGE.color = Color.green;
+            good = false;
+            rounds--;
+            roundsShown.text = ("Rounds: " + rounds);
+
+        }
+        else
+            IMAGE.color = Color.red;
+
+    }
 
     //sets the points
     public void setPoints(int which, bool Julian)
@@ -295,18 +354,20 @@ public class Spawn : MonoBehaviour
         for (int i = 0; i < correct.Length; i++)
         {
             if (correct[i] == true)
-            ouch++;
+                ouch++;
         }
 
 
         if (ouch == 4)
         {
-            if(Time.timeScale == 1)
-                points += 100;
-            Time.timeScale = 0;
+            good = true;
+         
         }
         else
+        {
+            good = false;
             ouch = 0;
+        }
         /*
         correct = 0;
         else correct++;
@@ -317,5 +378,7 @@ public class Spawn : MonoBehaviour
         */
     }
 
-
+    public int returnPoints()
+    { return points; }
+    
 }

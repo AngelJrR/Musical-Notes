@@ -11,12 +11,13 @@ public class SolfegeI : MonoBehaviour
     public string solfege;
     public int which;
     public NoteSounds Nsound;
-
+    Spawn Manager;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Manager = FindFirstObjectByType<Spawn>();
+
     }
 
     // Update is called once per frame
@@ -40,10 +41,12 @@ public class SolfegeI : MonoBehaviour
         // Debug.Log(solfege);
         if (input.Equals(solfege, StringComparison.InvariantCultureIgnoreCase))
         {
-            Nsound.changeColor(0, which);
+            Manager.setPoints(which, true);
+            //Nsound.changeColor(0, which);
         }
         else
-            Nsound.changeColor(1, which);
+            Manager.setPoints(which, false);
+            //Nsound.changeColor(1, false);
 
 
     }
