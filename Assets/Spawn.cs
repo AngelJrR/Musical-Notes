@@ -22,7 +22,7 @@ public class Spawn : MonoBehaviour
     public TMP_Text roundsShown;
     public TMP_Text ScaleShown;
 
-    int points = 100;
+    int points = 1500;
     bool first = true;
     int topthing = 4;
     float bottomthing = 4f;
@@ -34,6 +34,8 @@ public class Spawn : MonoBehaviour
      public TMP_InputField h;
      public TMP_InputField b;
      */
+    int timer = 0;
+    
     GameObject[] notes = new GameObject[4];
     public int switcheroo = 0;
     public List<TMP_InputField> inputs = new List<TMP_InputField>();
@@ -80,8 +82,8 @@ public class Spawn : MonoBehaviour
         {
 
 
-            points -= 1;
-            pointShown.text = ("Points: " + points);
+            timer++;
+            pointShown.text = ("Timer: " + timer);
 
             nextTime += interval;
 
@@ -258,6 +260,7 @@ public class Spawn : MonoBehaviour
         allCorrect();
         if (rounds == 0)
         {
+            points = 1500 / timer + points;
             SceneManager.LoadScene("Finish", LoadSceneMode.Single);
             Debug.Log("frick2");
         }
@@ -271,6 +274,11 @@ public class Spawn : MonoBehaviour
                     UnityEngine.Object.Destroy((UnityEngine.Object)spawnList[i]);
                 }
                 //Destroy(gameObject);
+                for (int i = 0; i < inputs.Count; i++)
+                { 
+                SolfegeI solfegeInput = inputs[i].GetComponent<SolfegeI>();
+                solfegeInput.clearInput();
+            }
 
                 spawnList.Clear();
                 

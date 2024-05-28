@@ -54,4 +54,13 @@ public class SolfegeI : MonoBehaviour
     //i forgot
     public void setNsound(NoteSounds sound)
     { this.Nsound = sound; }
+
+    public void clearInput()
+    {
+        this.GetComponent<TMP_InputField>().text = "";
+        
+
+    }
+
+    
 }

@@ -3207,7 +3207,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Points: '
+  m_text: 'Timer:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3796,14 +3796,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - {fileID: 4410903422505802168, guid: 131ad5f29a4a10f478560071944ab439, type: 3}
-  - {fileID: 4410903422505802168, guid: 131ad5f29a4a10f478560071944ab439, type: 3}
-  - {fileID: 4410903422505802168, guid: 131ad5f29a4a10f478560071944ab439, type: 3}
-  - {fileID: 4410903422505802168, guid: 131ad5f29a4a10f478560071944ab439, type: 3}
-  - {fileID: 4410903422505802168, guid: 131ad5f29a4a10f478560071944ab439, type: 3}
-  - {fileID: 4410903422505802168, guid: 131ad5f29a4a10f478560071944ab439, type: 3}
-  - {fileID: 4410903422505802168, guid: 131ad5f29a4a10f478560071944ab439, type: 3}
-  - {fileID: 4410903422505802168, guid: 131ad5f29a4a10f478560071944ab439, type: 3}
+  - {fileID: 4410903422505802168, guid: cf28e3159c017a040aeae902c2b9855c, type: 3}
+  - {fileID: 4410903422505802168, guid: aaa9913363c089c439faaa874587f04c, type: 3}
+  - {fileID: 4410903422505802168, guid: 5ea99c57e4c03e34caa664d7574fa5f3, type: 3}
+  - {fileID: 4410903422505802168, guid: a957d1f92b781ee4ab5c7d7efc9d011d, type: 3}
+  - {fileID: 4410903422505802168, guid: 8f5c2ed24848c404db598f223480a9c0, type: 3}
+  - {fileID: 4410903422505802168, guid: 7cf53d3e16336944ea2d3c43b3176922, type: 3}
+  - {fileID: 4410903422505802168, guid: 4c1a54cdfc8ab8745b6e05879da20295, type: 3}
+  - {fileID: 4410903422505802168, guid: 3e315191a4cd01e439a92d104d33549f, type: 3}
 --- !u!4 &1686398838
 Transform:
   m_ObjectHideFlags: 0
