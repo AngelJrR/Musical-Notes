@@ -328,6 +328,7 @@ MonoBehaviour:
   pointShown: {fileID: 1511629761}
   roundsShown: {fileID: 1996725471}
   ScaleShown: {fileID: 1461004384}
+  whatScale: {fileID: 1751552358}
   DHolder: {fileID: 1922042740}
   FHolder: {fileID: 1686398837}
   switcheroo: 0
@@ -1377,7 +1378,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 221.36, y: 171}
+  m_AnchoredPosition: {x: 239.1, y: -68.362}
   m_SizeDelta: {x: 454.2236, y: 85.16687}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &691441853
@@ -4012,7 +4013,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Change Difficulty
+  m_text: 'Switch to F Major
 
 '
   m_isRightToLeft: 0
@@ -4564,7 +4565,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -798, y: 495.9}
+  m_AnchoredPosition: {x: 809.99, y: -391.16}
   m_SizeDelta: {x: 300.0143, y: 88.3924}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1996725470

@@ -21,7 +21,8 @@ public class Spawn : MonoBehaviour
     public TMP_Text pointShown;
     public TMP_Text roundsShown;
     public TMP_Text ScaleShown;
-
+    public TMP_Text whatScale;
+    public roundstuff AHHH;
     int points = 1500;
     bool first = true;
     int topthing = 4;
@@ -49,6 +50,7 @@ public class Spawn : MonoBehaviour
     int rounds = 5;
     public GameObject myself;
 
+    [Obsolete]
     private void Awake()
     {
         //set stuff
@@ -61,6 +63,9 @@ public class Spawn : MonoBehaviour
         IMAGE = BUTTON.image;
         DontDestroyOnLoad(this);
         DontDestroyOnLoad(myself);
+        AHHH = FindFirstObjectByType<roundstuff>();
+        
+        rounds = AHHH.getRounds();
     }
 
     // Start is called before the first frame update
@@ -119,7 +124,11 @@ public class Spawn : MonoBehaviour
         //  float left = topthing;
         float spacing = (12f / topthing);
         float upPosition;
-        int place = UnityEngine.Random.Range(0, 2);
+        int place = switcheroo;
+        if( switcheroo == 2 )
+        {
+            place = UnityEngine.Random.Range(0, 2);
+        }
 
 
         //creates the four sound notes and ntoes (quarter)
@@ -285,9 +294,9 @@ public class Spawn : MonoBehaviour
             }
 
             //Debug.Log("frick3");
-            if (switcheroo == 0)
+            //if (switcheroo == 0)
                 easy();
-            else begin();
+            //else begin();*/
         }
         first = false;
         ready = false;
@@ -297,8 +306,19 @@ public class Spawn : MonoBehaviour
     public void Nintendo()
     {
         if (switcheroo == 0)
+        {
             switcheroo = 1;
-        else switcheroo = 0;
+            whatScale.text = ("Switch to Random Scale");
+        }
+        else if (switcheroo == 1)
+        { switcheroo = 2;
+            whatScale.text = ("Switch to D Minor Scale");
+        }
+        else
+        {
+            switcheroo = 0;
+            whatScale.text = ("Switch to F Major Scale");
+        }
     }
 
     //plays all sounds button
